@@ -8,14 +8,14 @@
 
 % inputs
 thickness = 0.2; % [inches]
-hg = 13736; % [W/m2/degC] heat transfer coeff of combustion gases
+hg = 2584.8; % [W/m2/degC] heat transfer coeff of combustion gases
 ha = 50; % [W/m2/degC] heat transfer coeff of ambient air
-k = 45; % [W/m/degC]
+k = 0.6918; % [W/m/degC]
 T_start = 298; % starting temperature (
 
-NoFiniteElems = 20; % number of finite elements
+NoFiniteElems = 50; % number of finite elements
 dt = 0.0001; % time increment [s]
-dT = 20; % total time simulated [s]
+dT = 10; % total time simulated [s]
 
 rho = 8000; % [kg/m3] density of material
 cp = 490; % [J/kg/degK] heat capacity of chamber material. Ref: Cp_steel = 490
@@ -53,13 +53,11 @@ end
 
 
 %% Plotting
-for ind = [2000 5000 10000 20000 50000]
+for ind = [2000 5000 10000 20000 50000 100000]
     Tsec = T(:,ind);
     time = ind/length(T) * dT;
     y = 0:(thickness/NoFiniteElems):thickness;
-    x = 0:1/20:1;
-    
-    z = T20sec;
+    x = 0:1/NoFiniteElems:1;
     
     [X, Y]=meshgrid(x,y);
     Z = ones(length(x),length(y));
@@ -76,6 +74,7 @@ for ind = [2000 5000 10000 20000 50000]
     
     c = colorbar;
     c.Label.String = 'Temperature [K]';
+%     caxis([T_start,Tsec(end)]);
 end
 
 %% 
